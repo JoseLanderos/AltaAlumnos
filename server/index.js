@@ -19,6 +19,7 @@ app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
 
+// Metodo POST
 
 app.post('/alumnos', async (req, res) => {
   try {
@@ -69,6 +70,9 @@ app.post('/alumnos', async (req, res) => {
     res.status(500).json({ error: 'Error al registrar alumno' });
   }
 });
+
+
+// Metodo GET
 
 app.get('/alumnos', async (req, res) => {
   try {
