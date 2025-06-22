@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Escuela {
+  id      Int      @id @default(autoincrement())
+  nombre  String
+  alumnos Alumno[]
+}
+
+model Alumno {
+  id         Int             @id @default(autoincrement())
+  nombre     String
+  escuelaId  Int              @map("escuela")
+  escuela    Escuela         @relation(fields: [escuelaId], references: [id])
+  padres     AlumnoPadres[]
+}
+
+model Padres {
+  id             Int             @id @default(autoincrement())
+  nombre_padre   String
+  apellido_padre String
+  nombre_madre   String
+  apellido_madre String
+  alumnos        AlumnoPadres[]
+}
+
+model AlumnoPadres {
+  alumnoId Int  @map("id_alumno")
+  padresId Int  @map("id_padres")
+
+  alumno   Alumno @relation(fields: [alumnoId], references: [id])
+  padres   Padres @relation(fields: [padresId], references: [id])
+
+  @@id([alumnoId, padresId])
+}

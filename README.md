@@ -19,8 +19,10 @@
 ## 🧱 Estructura del proyecto
 
 AltaAlumnos/
-- ├── client/ → Aplicación frontend (React + Tailwind)
-- └── server/ → API backend (Node.js + Express + Prisma)
+
+├── client/ → Aplicación frontend (React + Tailwind)
+
+└── server/ → API backend (Node.js + Express + Prisma)
 
 
 ---
