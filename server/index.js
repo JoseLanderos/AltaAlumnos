@@ -70,4 +70,41 @@ app.post('/alumnos', async (req, res) => {
   }
 });
 
+app.get('/alumnos', async (req, res) => {
+  try {
+    const { nombre, escuelaId } = req.query;
+
+    // Construir condiciones dinámicas de búsqueda
+    const where = {};
+
+    if (nombre) {
+      where.nombre = {
+        contains: nombre,
+      };
+    }
+
+    if (escuelaId) {
+      where.escuelaId = parseInt(escuelaId);
+    }
+
+    // Buscar alumnos
+    const alumnos = await prisma.alumno.findMany({
+      where,
+      include: {
+        escuela: true,
+        padres: {
+          include: {
+            padres: true
+          }
+        }
+      }
+    });
+
+    res.json(alumnos);
+  } catch (error) {
+    console.error('Error al obtener alumnos:', error.message);
+    res.status(500).json({ error: 'Error al obtener alumnos' });
+  }
+});
+
 
